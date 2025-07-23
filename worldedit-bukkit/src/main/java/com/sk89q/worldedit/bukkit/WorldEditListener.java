@@ -58,6 +58,7 @@ public class WorldEditListener implements Listener {
 
     private final WorldEditPlugin plugin;
     private final InteractionDebouncer debouncer;
+   // public static boolean eventsEnabled = false;
 
     /**
      * Construct the object.
@@ -132,55 +133,56 @@ public class WorldEditListener implements Listener {
      *
      * @param event Relevant event details
      */
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent event) {
-        if (!plugin.getInternalPlatform().isHookingEvents()
-                || event.useItemInHand() == Result.DENY
-                || event.getHand() == EquipmentSlot.OFF_HAND
-                || event.getAction() == Action.PHYSICAL) {
-            return;
-        }
-
-        final Player player = plugin.wrapPlayer(event.getPlayer());
-
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK) {
-            Optional<Boolean> previousResult = debouncer.getDuplicateInteractionResult(player);
-            if (previousResult.isPresent()) {
-                if (previousResult.get()) {
-                    event.setCancelled(true);
-                }
-                return;
-            }
-        }
-
-        final World world = player.getWorld();
-        final WorldEdit we = plugin.getWorldEdit();
-        final Direction direction = BukkitAdapter.adapt(event.getBlockFace());
-        final Block clickedBlock = event.getClickedBlock();
-        final Location pos = clickedBlock == null ? null : new Location(world, clickedBlock.getX(), clickedBlock.getY(), clickedBlock.getZ());
-
-        boolean result = false;
-        switch (event.getAction()) {
-            case LEFT_CLICK_BLOCK:
-                result = we.handleBlockLeftClick(player, pos, direction) || we.handleArmSwing(player);
-                break;
-            case LEFT_CLICK_AIR:
-                result = we.handleArmSwing(player);
-                break;
-            case RIGHT_CLICK_BLOCK:
-                result = we.handleBlockRightClick(player, pos, direction) || we.handleRightClick(player);
-                break;
-            case RIGHT_CLICK_AIR:
-                result = we.handleRightClick(player);
-                break;
-            default:
-                break;
-        }
-        debouncer.setLastInteraction(player, result);
-        if (result) {
-            event.setCancelled(true);
-        }
-    }
+//    @EventHandler
+//    public void onPlayerInteract(PlayerInteractEvent event) {
+//        if(!eventsEnabled) return;
+//        if (!plugin.getInternalPlatform().isHookingEvents()
+//                || event.useItemInHand() == Result.DENY
+//                || event.getHand() == EquipmentSlot.OFF_HAND
+//                || event.getAction() == Action.PHYSICAL) {
+//            return;
+//        }
+//
+//        final Player player = plugin.wrapPlayer(event.getPlayer());
+//
+//        if (event.getAction() != Action.LEFT_CLICK_BLOCK) {
+//            Optional<Boolean> previousResult = debouncer.getDuplicateInteractionResult(player);
+//            if (previousResult.isPresent()) {
+//                if (previousResult.get()) {
+//                    event.setCancelled(true);
+//                }
+//                return;
+//            }
+//        }
+//
+//        final World world = player.getWorld();
+//        final WorldEdit we = plugin.getWorldEdit();
+//        final Direction direction = BukkitAdapter.adapt(event.getBlockFace());
+//        final Block clickedBlock = event.getClickedBlock();
+//        final Location pos = clickedBlock == null ? null : new Location(world, clickedBlock.getX(), clickedBlock.getY(), clickedBlock.getZ());
+//
+//        boolean result = false;
+//        switch (event.getAction()) {
+//            case LEFT_CLICK_BLOCK:
+//                result = we.handleBlockLeftClick(player, pos, direction) || we.handleArmSwing(player);
+//                break;
+//            case LEFT_CLICK_AIR:
+//                result = we.handleArmSwing(player);
+//                break;
+//            case RIGHT_CLICK_BLOCK:
+//                result = we.handleBlockRightClick(player, pos, direction) || we.handleRightClick(player);
+//                break;
+//            case RIGHT_CLICK_AIR:
+//                result = we.handleRightClick(player);
+//                break;
+//            default:
+//                break;
+//        }
+//        debouncer.setLastInteraction(player, result);
+//        if (result) {
+//            event.setCancelled(true);
+//        }
+//    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
