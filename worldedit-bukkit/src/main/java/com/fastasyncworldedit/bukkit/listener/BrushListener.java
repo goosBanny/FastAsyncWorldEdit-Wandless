@@ -22,7 +22,7 @@ public class BrushListener implements Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+   // @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerItemHoldEvent(final PlayerItemHeldEvent event) {
         final Player bukkitPlayer = event.getPlayer();
         if (bukkitPlayer.isSneaking()) {
@@ -46,7 +46,7 @@ public class BrushListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+  //  @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInteract(final PlayerInteractEvent event) {
         Player bukkitPlayer = event.getPlayer();
         if (bukkitPlayer.isSneaking()) {
