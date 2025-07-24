@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter
 import xyz.jpenilla.runpaper.task.RunServer
 
 plugins {
-    id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
@@ -83,7 +82,7 @@ allprojects {
 }
 
 applyCommonConfiguration()
-val supportedVersions = listOf("1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1", "1.21.4", "1.21.5", "1.21.7")
+val supportedVersions = listOf("1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1", "1.21.4", "1.21.5", "1.21.8")
 
 tasks {
     supportedVersions.forEach {
@@ -97,18 +96,9 @@ tasks {
         }
     }
     runServer {
-        minecraftVersion("1.21.7")
+        minecraftVersion("1.21.8")
         pluginJars(*project(":worldedit-bukkit").getTasksByName("shadowJar", false).map { (it as Jar).archiveFile }
                 .toTypedArray())
 
-    }
-}
-
-nexusPublishing {
-    this.repositories {
-        sonatype {
-            nexusUrl.set(URI.create("https://s01.oss.sonatype.org/service/local/"))
-            snapshotRepositoryUrl.set(URI.create("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
-        }
     }
 }
