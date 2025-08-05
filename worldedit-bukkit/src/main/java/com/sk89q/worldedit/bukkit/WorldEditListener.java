@@ -110,7 +110,7 @@ public class WorldEditListener implements Listener {
     }
     //FAWE end
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+   // @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onPlayerCommandSend(PlayerCommandSendEvent event) {
         InjectedValueStore store = MapBackedValueStore.create();
         store.injectValue(Key.of(Actor.class), context ->
