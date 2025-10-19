@@ -204,12 +204,6 @@ public final class PaperweightAdapter implements BukkitImplAdapter<net.minecraft
 
     private static final RandomSource random = RandomSource.create();
 
-    private static final String WRONG_VERSION =
-            """
-            This version of FastAsyncWorldEdit has not been tested with the current Minecraft version.
-            While it may work, there might be unexpected issues.
-            It is recommended to use a version of FastAsyncWorldEdit that supports your Minecraft version.
-            """.stripIndent();
 
     // ------------------------------------------------------------------------
     // Code that may break between versions of Minecraft
@@ -221,7 +215,7 @@ public final class PaperweightAdapter implements BukkitImplAdapter<net.minecraft
 
         int dataVersion = SharedConstants.getCurrentVersion().dataVersion().version();
         if (dataVersion != Constants.DATA_VERSION_MC_1_21_6 && dataVersion != Constants.DATA_VERSION_MC_1_21_7 && dataVersion != Constants.DATA_VERSION_MC_1_21_8) {
-            logger.warning(WRONG_VERSION);
+            throw new UnsupportedClassVersionError("Not 1.21.(6/7/8)!");
         }
 
         serverWorldsField = CraftServer.class.getDeclaredField("worlds");
